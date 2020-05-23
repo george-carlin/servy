@@ -14,14 +14,14 @@ defmodule Servy.Parser do
     params = parse_params(headers["Content-Type"], params_string)
 
     %Conv{
-      method: method,
-      header: headers,
-      path: path,
-      params: params
-    }
+       method: method,
+       path: path,
+       params: params,
+       headers: headers
+     }
   end
 
-  def parse_headers([head | tail]) do
+  def parse_headers([head | tail], headers) do
     [key, value] = String.split(head, ": ")
     headers = Map.put(headers, key, value)
     parse_headers(tail, headers)
@@ -34,4 +34,5 @@ defmodule Servy.Parser do
   end
 
   def parse_params(_, _), do: %{}
+
 end
